@@ -43,12 +43,32 @@ public class App
         cowslist.add(cow9);
         cowslist.add(cow10);
         displayAllCows(cowslist);
-        //Map<String, Cow> CowHashMap = hashMap(cow1, cow2, cow3, cow4, cow5, cow6, cow7, cow8, cow9, cow10);
-        //getHashMapObjectByKey(CowHashMap);
-        //Map<String, Cow> CowTreeMap = treeMap(cow1, cow2, cow3, cow4, cow5, cow6, cow7, cow8, cow9, cow10);
-        //getTreeMapObjectByKey(CowTreeMap);
-        PriorityQueue<Cow> CowPriorityQueue = priorityQueue(cow1, cow2, cow3, cow4, cow5, cow6, cow7, cow8, cow9, cow10);
 
+        ArrayList<String> farmerIDs = new ArrayList<>();
+        farmerIDs.add("O23953Y");
+        farmerIDs.add("O42133Y");
+        farmerIDs.add("O42690Y");
+        farmerIDs.add("O08208Y");
+        farmerIDs.add("O02906Y");
+
+        farmerIDs.add("O37426Y");
+        farmerIDs.add("O34799Y");
+        farmerIDs.add("O52012Y");
+        farmerIDs.add("O83391Y");
+        farmerIDs.add("O08208Y");
+        displayAllFarmerIDs(farmerIDs);
+
+        Map<String, Cow> CowHashMap = hashMap(cowslist, farmerIDs);
+        displayAllCowsInHashMap(CowHashMap);
+        getHashMapObjectByKey(CowHashMap);
+
+        Map<String, Cow> CowTreeMap = treeMap(cowslist, farmerIDs);
+        displayAllCowsInTreeMap(CowTreeMap);
+        getTreeMapObjectByKey(CowTreeMap);
+
+        PriorityQueue<Cow> CowPriorityQueue = priorityQueue(cowslist);
+        displayAllCowsInPriorityQueue(CowPriorityQueue);
+        priorityQueueTagIDComparator(CowPriorityQueue);
 
     }
     public void displayAllCows(ArrayList<Cow> cows)
@@ -59,22 +79,36 @@ public class App
         }
     }
 
-    public Map<String, Cow> hashMap(Cow cow1, Cow cow2, Cow cow3, Cow cow4, Cow cow5, Cow cow6, Cow cow7, Cow cow8,
-                                    Cow cow9, Cow cow10)
+    public void displayAllFarmerIDs(ArrayList<String> farmerIDs)
+    {
+        for(String id : farmerIDs)
+        {
+            System.out.println(id);
+        }
+    }
+
+    public Map<String, Cow> hashMap(ArrayList<Cow> cowslist, ArrayList<String> farmerIDs)
     {
         Map<String, Cow> CowHashMap = new HashMap<>();
         // String is the farmers herd id
-        CowHashMap.put("O23953Y", cow1);
-        CowHashMap.put("O42133Y", cow2);
-        CowHashMap.put("O42690Y", cow3);
-        CowHashMap.put("O08208Y", cow4);
-        CowHashMap.put("O02906Y", cow5);
-        CowHashMap.put("O37426Y", cow6);
-        CowHashMap.put("O96826Y", cow7);
-        CowHashMap.put("O34799Y", cow8);
-        CowHashMap.put("O52012Y", cow9);
-        CowHashMap.put("O83391Y", cow10);
+
+        for (Cow cow : cowslist)
+        {
+            for (String farmerID : farmerIDs)
+            {
+                CowHashMap.put(farmerID, cow);
+            }
+        }
         return CowHashMap;
+    }
+    public void displayAllCowsInHashMap(Map<String, Cow> CowHashMap)
+    {
+        Set<String> keySet = CowHashMap.keySet();
+        for (String key : keySet)
+        {
+            Cow value = CowHashMap.get(key);
+            System.out.println(key + " : " + value);
+        }
     }
 
     public static void getHashMapObjectByKey(Map<String, Cow> CowHashMap)
@@ -86,28 +120,37 @@ public class App
         }
 
         String key = "O08208Y";
-        if (CowHashMap.containsKey(key)) {
+        if (CowHashMap.containsKey(key))
+        {
             System.out.println("CowHashMap contains the key" + key + " with value " + CowHashMap.get(key));
-        } else {
+        }
+        else
+        {
             System.out.println("CowHashMap does NOT contain the key " + key);
         }
     }
 
-    public Map<String, Cow> treeMap(Cow cow1, Cow cow2, Cow cow3, Cow cow4, Cow cow5, Cow cow6, Cow cow7, Cow cow8,
-                                    Cow cow9, Cow cow10)
+    public Map<String, Cow> treeMap(ArrayList<Cow> cowslist, ArrayList<String> farmerIDs)
     {
         Map<String, Cow> CowTreeMap = new TreeMap<>();
-        CowTreeMap.put("O23953Y", cow1);
-        CowTreeMap.put("O42133Y", cow2);
-        CowTreeMap.put("O42690Y", cow3);
-        CowTreeMap.put("O08208Y", cow4);
-        CowTreeMap.put("O02906Y", cow5);
-        CowTreeMap.put("O37426Y", cow6);
-        CowTreeMap.put("O96826Y", cow7);
-        CowTreeMap.put("O34799Y", cow8);
-        CowTreeMap.put("O52012Y", cow9);
-        CowTreeMap.put("O83391Y", cow10);
+        // String is the farmers herd id
+
+        for (Cow cow : cowslist)
+        {
+            for (String farmerID : farmerIDs)
+            {
+                CowTreeMap.put(farmerID, cow);
+            }
+        }
         return CowTreeMap;
+    }
+    public void displayAllCowsInTreeMap(Map<String, Cow> CowTreeMap)
+    {
+        Set<String> keySet = CowTreeMap.keySet();
+        for (String key : keySet) {
+            Cow value = CowTreeMap.get(key);
+            System.out.println(key + " : " + value);
+        }
     }
 
     public static void getTreeMapObjectByKey(Map<String, Cow> CowTreeMap)
@@ -126,22 +169,28 @@ public class App
         }
     }
 
-    public PriorityQueue<Cow> priorityQueue(Cow cow1, Cow cow2, Cow cow3, Cow cow4, Cow cow5, Cow cow6, Cow cow7, Cow cow8,
-                                    Cow cow9, Cow cow10)
+    public PriorityQueue<Cow> priorityQueue(ArrayList<Cow> cowslist)
     {
-        PriorityQueue<Cow> priorityQueue= new PriorityQueue<>();
-        priorityQueue.add(cow1);
-        priorityQueue.add(cow2);
-        priorityQueue.add(cow3);
-        priorityQueue.add(cow4);
-        priorityQueue.add(cow5);
-
-        priorityQueue.add(cow6);
-        priorityQueue.add(cow7);
-        priorityQueue.add(cow8);
-        priorityQueue.add(cow9);
-        priorityQueue.add(cow10);
+        PriorityQueue<Cow> priorityQueue= new PriorityQueue<>(new CowTagIDComparator(SortType.Ascending));
+        priorityQueue.addAll(cowslist);
         return priorityQueue;
+    }
+
+    public void displayAllCowsInPriorityQueue(PriorityQueue<Cow> CowPriorityQueue)
+    {
+        for (Cow cow : CowPriorityQueue) {
+            System.out.print(cow + ", ");
+        }
+        System.out.println();
+    }
+
+    public void priorityQueueTagIDComparator(PriorityQueue<Cow> CowPriorityQueue)
+    {
+        System.out.println("Values in order of tag id:");
+        while ( !CowPriorityQueue.isEmpty() )
+        {
+            System.out.println(CowPriorityQueue.remove());
+        }
     }
 
 
