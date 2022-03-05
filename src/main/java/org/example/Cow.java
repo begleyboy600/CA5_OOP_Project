@@ -10,13 +10,15 @@ public class Cow {
     private String sex;
     private String breed;
     private LocalDate dateOfBirth;
+    private int milkYields;
 
-    public Cow(int tag_id, String sex, String breed, int year, int month, int day)
+    public Cow(int tag_id, String sex, String breed, int year, int month, int day, int milkYields)
     {
         this.tag_id = tag_id;
         this.sex = sex;
         this.breed = breed;
         this.dateOfBirth = LocalDate.of(year, month, day);
+        this.milkYields = milkYields;
     }
 
     public int getTag_id() {
@@ -51,17 +53,21 @@ public class Cow {
         this.dateOfBirth = dateOfBirth;
     }
 
+    public int getMilkYields(){return milkYields;}
+
+    public void setMilkYields(int milkYields){this.milkYields = milkYields;}
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Cow cow = (Cow) o;
-        return tag_id == cow.tag_id && Objects.equals(sex, cow.sex) && Objects.equals(breed, cow.breed) && Objects.equals(dateOfBirth, cow.dateOfBirth);
+        return tag_id == cow.tag_id && milkYields == cow.milkYields && Objects.equals(sex, cow.sex) && Objects.equals(breed, cow.breed) && Objects.equals(dateOfBirth, cow.dateOfBirth);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(tag_id, sex, breed, dateOfBirth);
+        return Objects.hash(tag_id, sex, breed, dateOfBirth, milkYields);
     }
 
     @Override
@@ -71,6 +77,7 @@ public class Cow {
                 ", sex='" + sex + '\'' +
                 ", breed='" + breed + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
+                ", milkYields=" + milkYields +
                 '}';
     }
 }

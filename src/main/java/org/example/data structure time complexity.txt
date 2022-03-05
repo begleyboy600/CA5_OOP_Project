@@ -1,0 +1,19 @@
+O(1) - the time taken will always be constant no matter how big or how small the data is.
+
+O(logN) - the time goes up linearly while the n goes up exponentially. For example if it takes 1 second to compute 10
+elements, it would then take 2 seconds to compute 100 elements
+
+
+Hash Map -
+The hash map put and get time complexities are both O(1) with the assumption that the key value pairs are well
+distributed across the bucket. The hash map allows only 1 null key and allows multiple null values. However it doesn't
+maintain any order.
+
+Tree Map -
+The tree map has a time complexity of O(logN) for the put and get operations. The tree map doesn't allow null keys but
+allows multiple null values. Unlike the hash map the tree map does maintain an order. The keys are in a sorted and
+ascending order.
+
+Priority Queue -
+The priority queue offer and poll operations have time complexities are both O(log(n)). But however the peek operation
+has a time complexity of O(1).
