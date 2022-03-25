@@ -40,6 +40,23 @@ public class App
                     System.out.println("Cow: " + cow.toString());
                 }
             }
+
+            System.out.println("\nCall: findCowByTagID()");
+            Scanner keyboard = new Scanner(System.in);
+            int tag_id;
+            System.out.println("Enter tag ID: ");
+            tag_id = keyboard.nextInt();
+            Cow cow_ = ICowDao.findCowByTagID(tag_id);
+            if(cow_ != null)
+            {
+                System.out.println("Cow found: " + cow_);
+            }
+            else
+            {
+                System.out.println("Tag ID was not found");
+            }
+
+
         }
         catch(DaoExceptions e )
         {

@@ -7,5 +7,6 @@ import java.util.List;
 public interface CowDaoInterface
 {
     public List<Cow> findAllCows() throws DaoExceptions;
+    public Cow findCowByTagID(int tag_id) throws DaoExceptions;
 
 }
