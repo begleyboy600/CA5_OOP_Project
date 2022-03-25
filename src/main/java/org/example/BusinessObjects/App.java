@@ -1,10 +1,17 @@
-package org.example;
+package org.example.BusinessObjects;
+
+import org.example.DTOs.Cow;
+import org.example.Exceptions.DaoExceptions;
+import org.example.SortType;
+import org.example.milkYieldComparator;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.Comparator;
-import java.util.Iterator;
 import java.util.PriorityQueue;
+import org.example.DAOs.MySqlCowDao;
+import org.example.DAOs.CowDaoInterface;
+import org.example.DTOs.Cow;
+import java.util.List;
 
 /**
  * Hello world!
@@ -12,11 +19,36 @@ import java.util.PriorityQueue;
  */
 public class App
 {
-    public static void main( String[] args  ) throws IOException {
-        App app = new App();
-        app.start();
+    public static void main(String[] args  )
+    {
+        //App app = new App();
+        //app.start();
+        CowDaoInterface ICowDao = new MySqlCowDao();
+
+        try
+        {
+            System.out.println("\nCall findAllCows()");
+            List<Cow> cows_ = ICowDao.findAllCows();
+            if(cows_.isEmpty())
+            {
+                System.out.println("There are no cows");
+            }
+            else
+            {
+                for(Cow cow: cows_)
+                {
+                    System.out.println("Cow: " + cow.toString());
+                }
+            }
+        }
+        catch(DaoExceptions e )
+        {
+            e.printStackTrace();
+        }
+
 
     }
+    /*
     public void start() throws IOException {
         displayMainMenu();
     }
@@ -481,7 +513,5 @@ public class App
             System.out.println("The priorityQueue is now empty.");
     }
 
-
-
-
+     */
 }

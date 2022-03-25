@@ -1,7 +1,6 @@
-package org.example;
+package org.example.DTOs;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 // localDate format year : month : day

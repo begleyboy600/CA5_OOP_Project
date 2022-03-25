@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.DTOs.Cow;
+
 import java.util.Comparator;
 
 public class CowTagIDComparator
