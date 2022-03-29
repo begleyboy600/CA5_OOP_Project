@@ -2,10 +2,8 @@ package org.example.DAOs;
 
 import org.example.DTOs.Cow;
 import  org.example.Exceptions.DaoExceptions;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -122,4 +120,108 @@ public class MySqlCowDao extends MySqlDao implements CowDaoInterface
         }
         return c;
     }
+
+    public Cow addCow(int tag_id, String sex, String breed, int year, int month, int day, int milkYield) throws DaoExceptions
+    {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Cow c = null;
+        try
+        {
+            connection = this.getConnection();
+            String query = "INSERT INTO COW VALUES(?, ?, ?, ?, ?, ?, ?)";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, tag_id);
+            preparedStatement.setString(2, sex);
+            preparedStatement.setString(3, breed);
+            preparedStatement.setInt(4, year);
+            preparedStatement.setInt(5, month);
+            preparedStatement.setInt(6, day);
+            preparedStatement.setInt(7, milkYield);
+            preparedStatement.execute();
+            c = new Cow(tag_id, sex, breed, year, month, day, milkYield);
+
+        }
+        catch (SQLException e)
+        {
+            throw new DaoExceptions("addCow() " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                if(preparedStatement != null)
+                {
+                    preparedStatement.close();
+                }
+                if(connection != null)
+                {
+                    freeConnection(connection);
+                }
+            }
+            catch (SQLException e)
+            {
+                throw new DaoExceptions("addCow() " + e.getMessage());
+            }
+        }
+        return c;
+    }
+
+    public Cow deleteCow(int tag) throws DaoExceptions
+    {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Cow c = null;
+        try {
+            connection = this.getConnection();
+            String query = "DELETE FROM COW WHERE TAG_ID = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, tag);
+            preparedStatement.executeUpdate();
+
+            Statement statement = connection.createStatement();
+
+            while (resultSet.next()) {
+                int tagId_ = resultSet.getInt("TAG_ID");
+                String sex_ = resultSet.getString("SEX");
+                String breed_ = resultSet.getString("BREED");
+                int year_ = resultSet.getInt("YEAR");
+                int month_ = resultSet.getInt("MONTH");
+                int day_ = resultSet.getInt("DAY");
+                int milk_yield_ = resultSet.getInt("MILK_YIELD");
+                c = new Cow(tagId_, sex_, breed_, year_, month_, day_, milk_yield_);
+
+            }
+        } catch (SQLException e)
+        {
+            throw new DaoExceptions("addCow() " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                if(resultSet != null)
+                {
+                    resultSet.close();
+                }
+                if(preparedStatement != null)
+                {
+                    preparedStatement.close();
+                }
+                if(connection != null)
+                {
+                    freeConnection(connection);
+                }
+            }
+            catch (SQLException e)
+            {
+                throw new DaoExceptions("addCow() " + e.getMessage());
+            }
+        }
+        return c;
+    }
+
+
 }

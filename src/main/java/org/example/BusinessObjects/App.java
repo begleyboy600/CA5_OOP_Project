@@ -19,8 +19,7 @@ import java.util.List;
  */
 public class App
 {
-    public static void main(String[] args  )
-    {
+    public static void main(String[] args  ) throws DaoExceptions {
         //App app = new App();
         //app.start();
         CowDaoInterface ICowDao = new MySqlCowDao();
@@ -63,7 +62,33 @@ public class App
             e.printStackTrace();
         }
 
+        System.out.println("\nCall: addCow()");
+        Cow cows_ = ICowDao.addCow(450, "female", "angus", 2018, 11, 3, 6);
+        if(cows_ != null)
+        {
+           System.out.println("Cow found: " + cows_);
+        }
+        else
+        {
+            System.out.println("Tag ID was not found");
+        }
 
+/*
+        System.out.println("\nCall: deleteCow()");
+        Scanner keyboard = new Scanner(System.in);
+        int tag_id__;
+        System.out.println("Enter tag ID: ");
+        tag_id__ = keyboard.nextInt();
+        Cow cow__ = ICowDao.deleteCow(tag_id__);
+        if(cow__ != null)
+        {
+            System.out.println("Cow found: " + cow__);
+        }
+        else
+        {
+            System.out.println("Tag ID was not found");
+        }
+*/
     }
     /*
     public void start() throws IOException {
