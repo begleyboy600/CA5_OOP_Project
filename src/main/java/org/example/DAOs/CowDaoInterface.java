@@ -11,4 +11,6 @@ public interface CowDaoInterface
     public Cow addCow(int tag_id, String sex, String breed, int year, int month, int day, int milkYield) throws DaoExceptions;
     public Cow deleteCow(int tag) throws DaoExceptions;
     public List<Cow> findCowsUsingFilter() throws DaoExceptions;
+    public String findAllCowsJSON() throws DaoExceptions;
+    public String findCowByTagIDJSON(int tag_id) throws DaoExceptions;
 }

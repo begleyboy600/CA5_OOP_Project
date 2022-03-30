@@ -17,6 +17,7 @@ import java.util.List;
  * Hello world!
  *
  */
+@SuppressWarnings("unchecked")
 public class App {
     public static void main(String[] args) throws DaoExceptions {
         //App app = new App();
@@ -89,9 +90,12 @@ public class App {
             System.out.println("Enter milk yield: ");
             milkYield_ = keyboard.nextInt();
             List<Cow> cowsFilter = ICowDao.findCowsUsingFilter();
-            if (cowsFilter.isEmpty()) {
+            if (cowsFilter.isEmpty())
+            {
                 System.out.println("There are no cows with milk yield greater than " + milkYield_);
-            } else {
+            }
+            else
+            {
                 for (Cow cow : cowsFilter)
                 {
                     if(cow.getMilkYields() == milkYield_)
@@ -99,10 +103,28 @@ public class App {
                 }
             }
 
-        } catch (DaoExceptions throwables) {
+            System.out.println("\nDisplayCowsInJSON()");
+            String allCowsJSON = ICowDao.findAllCowsJSON();
+            System.out.println(allCowsJSON);
+
+
+            System.out.println("\nfindCowByTagIDJSON()");
+            int tag_id_;
+            System.out.println("Enter tag ID: ");
+            tag_id_ = keyboard.nextInt();
+            String JSON = ICowDao.findCowByTagIDJSON(tag_id_);
+            System.out.println(JSON);
+
+
+
+        }
+        catch (DaoExceptions throwables)
+        {
             throwables.printStackTrace();
         }
     }
+
+
     /*
     public void start() throws IOException {
         displayMainMenu();
