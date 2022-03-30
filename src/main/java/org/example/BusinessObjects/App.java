@@ -17,29 +17,23 @@ import java.util.List;
  * Hello world!
  *
  */
-public class App
-{
-    public static void main(String[] args  ) throws DaoExceptions {
+public class App {
+    public static void main(String[] args) throws DaoExceptions {
         //App app = new App();
         //app.start();
         CowDaoInterface ICowDao = new MySqlCowDao();
 
-        try
-        {
+        try {
             System.out.println("\nCall findAllCows()");
             List<Cow> cows_ = ICowDao.findAllCows();
-            if(cows_.isEmpty())
-            {
+            if (cows_.isEmpty()) {
                 System.out.println("There are no cows");
-            }
-            else
-            {
-                for(Cow cow: cows_)
-                {
+            } else {
+                for (Cow cow : cows_) {
                     System.out.println("Cow: " + cow.toString());
                 }
             }
-
+/*
             System.out.println("\nCall: findCowByTagID()");
             Scanner keyboard = new Scanner(System.in);
             int tag_id;
@@ -73,7 +67,7 @@ public class App
             System.out.println("Tag ID was not found");
         }
 
-/*
+
         System.out.println("\nCall: deleteCow()");
         Scanner keyboard = new Scanner(System.in);
         int tag_id__;
@@ -88,7 +82,26 @@ public class App
         {
             System.out.println("Tag ID was not found");
         }
-*/
+        */
+            System.out.println("\nfindCowsUsingFilter()");
+            Scanner keyboard = new Scanner(System.in);
+            int milkYield_;
+            System.out.println("Enter milk yield: ");
+            milkYield_ = keyboard.nextInt();
+            List<Cow> cowsFilter = ICowDao.findCowsUsingFilter();
+            if (cowsFilter.isEmpty()) {
+                System.out.println("There are no cows with milk yield greater than " + milkYield_);
+            } else {
+                for (Cow cow : cowsFilter)
+                {
+                    if(cow.getMilkYields() == milkYield_)
+                        System.out.println("Cow: " + cow.toString());
+                }
+            }
+
+        } catch (DaoExceptions throwables) {
+            throwables.printStackTrace();
+        }
     }
     /*
     public void start() throws IOException {
@@ -556,4 +569,5 @@ public class App
     }
 
      */
+
 }

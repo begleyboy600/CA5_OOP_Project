@@ -2,29 +2,28 @@ package org.example.DAOs;
 
 import org.example.DTOs.Cow;
 import  org.example.Exceptions.DaoExceptions;
+import org.example.SortType;
+import org.example.milkYieldComparator;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class MySqlCowDao extends MySqlDao implements CowDaoInterface
-{
+public class MySqlCowDao extends MySqlDao implements CowDaoInterface {
     @Override
-    public List<Cow> findAllCows() throws DaoExceptions
-    {
+    public List<Cow> findAllCows() throws DaoExceptions {
         Connection connection = null;
         PreparedStatement ps = null;
         ResultSet resultSet = null;
         List<Cow> cowList_ = new ArrayList<>();
 
-        try
-        {
+        try {
             connection = this.getConnection();
             String query = "SELECT * FROM COW";
             ps = connection.prepareStatement(query);
             resultSet = ps.executeQuery();
-            while(resultSet.next())
-            {
+            while (resultSet.next()) {
                 int tagId = resultSet.getInt("TAG_ID");
                 String sex = resultSet.getString("SEX");
                 String breed = resultSet.getString("BREED");
@@ -36,30 +35,20 @@ public class MySqlCowDao extends MySqlDao implements CowDaoInterface
                 cowList_.add(c);
             }
 
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             throw new DaoExceptions("findAllCowsResultSet() " + e.getMessage());
-        }
-        finally
-        {
-            try
-            {
-                if(resultSet != null)
-                {
+        } finally {
+            try {
+                if (resultSet != null) {
                     resultSet.close();
                 }
-                if(ps != null)
-                {
+                if (ps != null) {
                     ps.close();
                 }
-                if(connection != null)
-                {
+                if (connection != null) {
                     freeConnection(connection);
                 }
-            }
-            catch (SQLException e)
-            {
+            } catch (SQLException e) {
                 throw new DaoExceptions("findAllCows() " + e.getMessage());
             }
         }
@@ -67,21 +56,18 @@ public class MySqlCowDao extends MySqlDao implements CowDaoInterface
     }
 
     @Override
-    public Cow findCowByTagID(int tag_id) throws DaoExceptions
-    {
+    public Cow findCowByTagID(int tag_id) throws DaoExceptions {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         Cow c = null;
-        try
-        {
+        try {
             connection = this.getConnection();
             String query = "SELECT * FROM COW WHERE TAG_ID = ?";
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, tag_id);
             resultSet = preparedStatement.executeQuery();
-            if(resultSet.next())
-            {
+            if (resultSet.next()) {
                 int tagId = resultSet.getInt("TAG_ID");
                 String sex = resultSet.getString("SEX");
                 String breed = resultSet.getString("BREED");
@@ -91,44 +77,32 @@ public class MySqlCowDao extends MySqlDao implements CowDaoInterface
                 int milk_yield = resultSet.getInt("MILK_YIELD");
                 c = new Cow(tagId, sex, breed, year, month, day, milk_yield);
             }
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             throw new DaoExceptions("findCowByTagID() " + e.getMessage());
-        }
-        finally
-        {
-            try
-            {
-                if(resultSet != null)
-                {
+        } finally {
+            try {
+                if (resultSet != null) {
                     resultSet.close();
                 }
-                if(preparedStatement != null)
-                {
+                if (preparedStatement != null) {
                     preparedStatement.close();
                 }
-                if(connection != null)
-                {
+                if (connection != null) {
                     freeConnection(connection);
                 }
-            }
-            catch (SQLException e)
-            {
+            } catch (SQLException e) {
                 throw new DaoExceptions("findCowByTagID() " + e.getMessage());
             }
         }
         return c;
     }
 
-    public Cow addCow(int tag_id, String sex, String breed, int year, int month, int day, int milkYield) throws DaoExceptions
-    {
+    public Cow addCow(int tag_id, String sex, String breed, int year, int month, int day, int milkYield) throws DaoExceptions {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         Cow c = null;
-        try
-        {
+        try {
             connection = this.getConnection();
             String query = "INSERT INTO COW VALUES(?, ?, ?, ?, ?, ?, ?)";
             preparedStatement = connection.prepareStatement(query);
@@ -142,34 +116,24 @@ public class MySqlCowDao extends MySqlDao implements CowDaoInterface
             preparedStatement.execute();
             c = new Cow(tag_id, sex, breed, year, month, day, milkYield);
 
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             throw new DaoExceptions("addCow() " + e.getMessage());
-        }
-        finally
-        {
-            try
-            {
-                if(preparedStatement != null)
-                {
+        } finally {
+            try {
+                if (preparedStatement != null) {
                     preparedStatement.close();
                 }
-                if(connection != null)
-                {
+                if (connection != null) {
                     freeConnection(connection);
                 }
-            }
-            catch (SQLException e)
-            {
+            } catch (SQLException e) {
                 throw new DaoExceptions("addCow() " + e.getMessage());
             }
         }
         return c;
     }
 
-    public Cow deleteCow(int tag) throws DaoExceptions
-    {
+    public Cow deleteCow(int tag) throws DaoExceptions {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -194,34 +158,67 @@ public class MySqlCowDao extends MySqlDao implements CowDaoInterface
                 c = new Cow(tagId_, sex_, breed_, year_, month_, day_, milk_yield_);
 
             }
-        } catch (SQLException e)
-        {
+        } catch (SQLException e) {
             throw new DaoExceptions("addCow() " + e.getMessage());
-        }
-        finally
-        {
-            try
-            {
-                if(resultSet != null)
-                {
+        } finally {
+            try {
+                if (resultSet != null) {
                     resultSet.close();
                 }
-                if(preparedStatement != null)
-                {
+                if (preparedStatement != null) {
                     preparedStatement.close();
                 }
-                if(connection != null)
-                {
+                if (connection != null) {
                     freeConnection(connection);
                 }
-            }
-            catch (SQLException e)
-            {
+            } catch (SQLException e) {
                 throw new DaoExceptions("addCow() " + e.getMessage());
             }
         }
         return c;
     }
 
+    public List<Cow> findCowsUsingFilter() throws DaoExceptions {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet resultSet = null;
+        List<Cow> cowList_ = new ArrayList<>();
 
+        try {
+            connection = this.getConnection();
+            String query = "SELECT * FROM COW";
+            ps = connection.prepareStatement(query);
+            resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                int tagId = resultSet.getInt("TAG_ID");
+                String sex = resultSet.getString("SEX");
+                String breed = resultSet.getString("BREED");
+                int year = resultSet.getInt("YEAR");
+                int month = resultSet.getInt("MONTH");
+                int day = resultSet.getInt("DAY");
+                int milk_yield = resultSet.getInt("MILK_YIELD");
+                Cow c = new Cow(tagId, sex, breed, year, month, day, milk_yield);
+                cowList_.add(c);
+                cowList_.sort(new milkYieldComparator());
+            }
+
+        } catch (SQLException e) {
+            throw new DaoExceptions("findAllCowsResultSet() " + e.getMessage());
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (connection != null) {
+                    freeConnection(connection);
+                }
+            } catch (SQLException e) {
+                throw new DaoExceptions("findAllCows() " + e.getMessage());
+            }
+        }
+        return cowList_;
+    }
 }

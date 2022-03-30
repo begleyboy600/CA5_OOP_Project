@@ -6,16 +6,9 @@ import java.util.Comparator;
 
 public class milkYieldComparator
         implements Comparator<Cow> {
-    private SortType sortType;
-
-    public milkYieldComparator(SortType sortType) {
-        this.sortType = sortType;
-    }
-
     @Override
-    public int compare(Cow c1, Cow c2) {
-        int direction = sortType.getValue();
-        return direction * (c1.getMilkYields() - c2.getMilkYields());
+    public int compare(Cow cow1, Cow cow2) {
+        return cow2.getMilkYields() - cow1.getMilkYields();
     }
 }
 

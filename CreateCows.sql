@@ -27,3 +27,5 @@ INSERT INTO cow VALUES (224, "female", "angus", 2019, 2, 3, 6),
                        (363, "female", "hereford", 2021, 2, 6, 27),
                        (364, "female", "hereford", 2021, 2, 7, 27);
 
+
+
