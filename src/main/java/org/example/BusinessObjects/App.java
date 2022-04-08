@@ -34,37 +34,29 @@ public class App {
                     System.out.println("Cow: " + cow.toString());
                 }
             }
-/*
+
             System.out.println("\nCall: findCowByTagID()");
             Scanner keyboard = new Scanner(System.in);
             int tag_id;
             System.out.println("Enter tag ID: ");
             tag_id = keyboard.nextInt();
             Cow cow_ = ICowDao.findCowByTagID(tag_id);
-            if(cow_ != null)
-            {
+            if (cow_ != null) {
                 System.out.println("Cow found: " + cow_);
-            }
-            else
-            {
+            } else {
                 System.out.println("Tag ID was not found");
             }
 
 
-        }
-        catch(DaoExceptions e )
-        {
+        } catch (DaoExceptions e) {
             e.printStackTrace();
         }
 
         System.out.println("\nCall: addCow()");
         Cow cows_ = ICowDao.addCow(450, "female", "angus", 2018, 11, 3, 6);
-        if(cows_ != null)
-        {
-           System.out.println("Cow found: " + cows_);
-        }
-        else
-        {
+        if (cows_ != null) {
+            System.out.println("Cow found: " + cows_);
+        } else {
             System.out.println("Tag ID was not found");
         }
 
@@ -75,57 +67,40 @@ public class App {
         System.out.println("Enter tag ID: ");
         tag_id__ = keyboard.nextInt();
         Cow cow__ = ICowDao.deleteCow(tag_id__);
-        if(cow__ != null)
-        {
+        if (cow__ != null) {
             System.out.println("Cow found: " + cow__);
-        }
-        else
-        {
+        } else {
             System.out.println("Tag ID was not found");
         }
-        */
-            System.out.println("\nfindCowsUsingFilter()");
-            Scanner keyboard = new Scanner(System.in);
-            int milkYield_;
-            System.out.println("Enter milk yield: ");
-            milkYield_ = keyboard.nextInt();
-            List<Cow> cowsFilter = ICowDao.findCowsUsingFilter();
-            if (cowsFilter.isEmpty())
-            {
-                System.out.println("There are no cows with milk yield greater than " + milkYield_);
+
+        System.out.println("\nfindCowsUsingFilter()");
+        keyboard = new Scanner(System.in);
+        int milkYield_;
+        System.out.println("Enter milk yield: ");
+        milkYield_ = keyboard.nextInt();
+        List<Cow> cowsFilter = ICowDao.findCowsUsingFilter();
+        if (cowsFilter.isEmpty()) {
+            System.out.println("There are no cows with milk yield greater than " + milkYield_);
+        } else {
+            for (Cow cow : cowsFilter) {
+                if (cow.getMilkYields() == milkYield_)
+                    System.out.println("Cow: " + cow.toString());
             }
-            else
-            {
-                for (Cow cow : cowsFilter)
-                {
-                    if(cow.getMilkYields() == milkYield_)
-                        System.out.println("Cow: " + cow.toString());
-                }
-            }
-
-            System.out.println("\nDisplayCowsInJSON()");
-            String allCowsJSON = ICowDao.findAllCowsJSON();
-            System.out.println(allCowsJSON);
-
-
-            System.out.println("\nfindCowByTagIDJSON()");
-            int tag_id_;
-            System.out.println("Enter tag ID: ");
-            tag_id_ = keyboard.nextInt();
-            String JSON = ICowDao.findCowByTagIDJSON(tag_id_);
-            System.out.println(JSON);
-
-
-
         }
-        catch (DaoExceptions throwables)
-        {
-            throwables.printStackTrace();
-        }
+
+        System.out.println("\nDisplayCowsInJSON()");
+        String allCowsJSON = ICowDao.findAllCowsJSON();
+        System.out.println(allCowsJSON);
+
+
+        System.out.println("\nfindCowByTagIDJSON()");
+        int tag_id_;
+        System.out.println("Enter tag ID: ");
+        tag_id_ = keyboard.nextInt();
+        String JSON = ICowDao.findCowByTagIDJSON(tag_id_);
+        System.out.println(JSON);
     }
 
-
-    /*
     public void start() throws IOException {
         displayMainMenu();
     }
@@ -376,7 +351,7 @@ public class App {
         cowslist.add(cow9);
         cowslist.add(cow10);
 
-        PriorityQueue<Cow> CowPriorityQueue = new PriorityQueue<>(new milkYieldComparator(SortType.Descending));
+        PriorityQueue<Cow> CowPriorityQueue = new PriorityQueue<>(new milkYieldComparator());
 
         final String MENU_ITEMS = "\n*** PRIORITY QUEUE MENU ***\n"
                 + "1. Create Priority Queue\n"
@@ -545,7 +520,7 @@ public class App {
 
     public PriorityQueue<Cow> priorityQueue(ArrayList<Cow> cowslist)
     {
-        PriorityQueue<Cow> priorityQueue= new PriorityQueue<>(new milkYieldComparator(SortType.Descending));
+        PriorityQueue<Cow> priorityQueue= new PriorityQueue<>(new milkYieldComparator());
         priorityQueue.addAll(cowslist);
         return priorityQueue;
     }
@@ -590,6 +565,6 @@ public class App {
             System.out.println("The priorityQueue is now empty.");
     }
 
-     */
+
 
 }

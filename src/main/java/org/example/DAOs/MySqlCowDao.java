@@ -1,6 +1,7 @@
 package org.example.DAOs;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.example.DTOs.Cow;
 import  org.example.Exceptions.DaoExceptions;
 import org.example.SortType;
@@ -247,7 +248,7 @@ public class MySqlCowDao extends MySqlDao implements CowDaoInterface {
                 cowList_.add(c);
             }
 
-            Gson gsonParser = new Gson();
+            Gson gsonParser = new GsonBuilder().setPrettyPrinting().create();
             JsonString = gsonParser.toJson(cowList_);
         } catch (SQLException e) {
             throw new DaoExceptions("findAllCowsResultSet() " + e.getMessage());
@@ -292,7 +293,7 @@ public class MySqlCowDao extends MySqlDao implements CowDaoInterface {
                 int milk_yield = resultSet.getInt("MILK_YIELD");
                 c = new Cow(tagId, sex, breed, year, month, day, milk_yield);
             }
-            Gson gsonParser = new Gson();
+            Gson gsonParser = new GsonBuilder().setPrettyPrinting().create();
             JsonString = gsonParser.toJson(c);
         } catch (SQLException e) {
             throw new DaoExceptions("findCowByTagID() " + e.getMessage());
