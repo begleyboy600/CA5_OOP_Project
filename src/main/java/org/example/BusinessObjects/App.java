@@ -19,86 +19,86 @@ import java.util.List;
  */
 @SuppressWarnings("unchecked")
 public class App {
-    public static void main(String[] args) throws DaoExceptions {
-        //App app = new App();
-        //app.start();
-        CowDaoInterface ICowDao = new MySqlCowDao();
-
-        try {
-            System.out.println("\nCall findAllCows()");
-            List<Cow> cows_ = ICowDao.findAllCows();
-            if (cows_.isEmpty()) {
-                System.out.println("There are no cows");
-            } else {
-                for (Cow cow : cows_) {
-                    System.out.println("Cow: " + cow.toString());
-                }
-            }
-
-            System.out.println("\nCall: findCowByTagID()");
-            Scanner keyboard = new Scanner(System.in);
-            int tag_id;
-            System.out.println("Enter tag ID: ");
-            tag_id = keyboard.nextInt();
-            Cow cow_ = ICowDao.findCowByTagID(tag_id);
-            if (cow_ != null) {
-                System.out.println("Cow found: " + cow_);
-            } else {
-                System.out.println("Tag ID was not found");
-            }
-
-
-        } catch (DaoExceptions e) {
-            e.printStackTrace();
-        }
-
-        System.out.println("\nCall: addCow()");
-        Cow cows_ = ICowDao.addCow(450, "female", "angus", 2018, 11, 3, 6);
-        if (cows_ != null) {
-            System.out.println("Cow found: " + cows_);
-        } else {
-            System.out.println("Tag ID was not found");
-        }
-
-
-        System.out.println("\nCall: deleteCow()");
-        Scanner keyboard = new Scanner(System.in);
-        int tag_id__;
-        System.out.println("Enter tag ID: ");
-        tag_id__ = keyboard.nextInt();
-        Cow cow__ = ICowDao.deleteCow(tag_id__);
-        if (cow__ != null) {
-            System.out.println("Cow found: " + cow__);
-        } else {
-            System.out.println("Tag ID was not found");
-        }
-
-        System.out.println("\nfindCowsUsingFilter()");
-        keyboard = new Scanner(System.in);
-        int milkYield_;
-        System.out.println("Enter milk yield: ");
-        milkYield_ = keyboard.nextInt();
-        List<Cow> cowsFilter = ICowDao.findCowsUsingFilter();
-        if (cowsFilter.isEmpty()) {
-            System.out.println("There are no cows with milk yield greater than " + milkYield_);
-        } else {
-            for (Cow cow : cowsFilter) {
-                if (cow.getMilkYields() == milkYield_)
-                    System.out.println("Cow: " + cow.toString());
-            }
-        }
-
-        System.out.println("\nDisplayCowsInJSON()");
-        String allCowsJSON = ICowDao.findAllCowsJSON();
-        System.out.println(allCowsJSON);
-
-
-        System.out.println("\nfindCowByTagIDJSON()");
-        int tag_id_;
-        System.out.println("Enter tag ID: ");
-        tag_id_ = keyboard.nextInt();
-        String JSON = ICowDao.findCowByTagIDJSON(tag_id_);
-        System.out.println(JSON);
+    public static void main(String[] args) throws DaoExceptions, IOException {
+        App app = new App();
+        app.start();
+//        CowDaoInterface ICowDao = new MySqlCowDao();
+//
+//        try {
+//            System.out.println("\nCall findAllCows()");
+//            List<Cow> cows_ = ICowDao.findAllCows();
+//            if (cows_.isEmpty()) {
+//                System.out.println("There are no cows");
+//            } else {
+//                for (Cow cow : cows_) {
+//                    System.out.println("Cow: " + cow.toString());
+//                }
+//            }
+//
+//            System.out.println("\nCall: findCowByTagID()");
+//            Scanner keyboard = new Scanner(System.in);
+//            int tag_id;
+//            System.out.println("Enter tag ID: ");
+//            tag_id = keyboard.nextInt();
+//            Cow cow_ = ICowDao.findCowByTagID(tag_id);
+//            if (cow_ != null) {
+//                System.out.println("Cow found: " + cow_);
+//            } else {
+//                System.out.println("Tag ID was not found");
+//            }
+//
+//
+//        } catch (DaoExceptions e) {
+//            e.printStackTrace();
+//        }
+//
+//        System.out.println("\nCall: addCow()");
+//        Cow cows_ = ICowDao.addCow(450, "female", "angus", 2018, 11, 3, 6);
+//        if (cows_ != null) {
+//            System.out.println("Cow found: " + cows_);
+//        } else {
+//            System.out.println("Tag ID was not found");
+//        }
+//
+//
+//        System.out.println("\nCall: deleteCow()");
+//        Scanner keyboard = new Scanner(System.in);
+//        int tag_id__;
+//        System.out.println("Enter tag ID: ");
+//        tag_id__ = keyboard.nextInt();
+//        Cow cow__ = ICowDao.deleteCow(tag_id__);
+//        if (cow__ != null) {
+//            System.out.println("Cow found: " + cow__);
+//        } else {
+//            System.out.println("Tag ID was not found");
+//        }
+//
+//        System.out.println("\nfindCowsUsingFilter()");
+//        keyboard = new Scanner(System.in);
+//        int milkYield_;
+//        System.out.println("Enter milk yield: ");
+//        milkYield_ = keyboard.nextInt();
+//        List<Cow> cowsFilter = ICowDao.findCowsUsingFilter();
+//        if (cowsFilter.isEmpty()) {
+//            System.out.println("There are no cows with milk yield greater than " + milkYield_);
+//        } else {
+//            for (Cow cow : cowsFilter) {
+//                if (cow.getMilkYields() == milkYield_)
+//                    System.out.println("Cow: " + cow.toString());
+//            }
+//        }
+//
+//        System.out.println("\nDisplayCowsInJSON()");
+//        String allCowsJSON = ICowDao.findAllCowsJSON();
+//        System.out.println(allCowsJSON);
+//
+//
+//        System.out.println("\nfindCowByTagIDJSON()");
+//        int tag_id_;
+//        System.out.println("Enter tag ID: ");
+//        tag_id_ = keyboard.nextInt();
+//        String JSON = ICowDao.findCowByTagIDJSON(tag_id_);
+//        System.out.println(JSON);
     }
 
     public void start() throws IOException {
@@ -111,13 +111,15 @@ public class App {
                 + "1. Hash Map\n"
                 + "2. Tree Map\n"
                 + "3. Priority Queue\n"
-                + "4. Exit\n"
+                + "4. DAO\n"
+                + "5. Exit\n"
                 + "Enter Option [1,4]";
 
         final int HASHMAP = 1;
         final int TREEMAP = 2;
         final int PRIORITY_QUEUE = 3;
-        final int EXIT = 4;
+        final int DAO = 4;
+        final int EXIT = 5;
 
         Scanner keyboard = new Scanner(System.in);
         int option = 0;
@@ -139,6 +141,10 @@ public class App {
                         System.out.println("Priority Queue option chosen");
                         displayPriorityQueueMenu();
                         break;
+                    case DAO:
+                        System.out.println("DAO option chosen");
+                        displayDAOMenu();
+                        break;
                     case EXIT:
                         System.out.println("Exit Menu option chosen");
                         break;
@@ -155,7 +161,138 @@ public class App {
         System.out.println("\nExiting Main Menu, goodbye.");
     }
 
-    private void displayHashMapMenu() {
+    private void displayDAOMenu()
+    {
+        Scanner keyboard = new Scanner(System.in);
+        CowDaoInterface ICowDao = new MySqlCowDao();
+        final String MENU_ITEMS = "\n*** HASH MAP MENU ***\n"
+                + "1. Find All Cows\n"
+                + "2. Find Cow By Tag ID\n"
+                + "3. Add Cow\n"
+                + "4. Delete Cow\n"
+                + "5. Find Cows Using Filter\n"
+                + "6. Exit\n"
+                + "Enter Option [1,6]";
+
+        final int FIND_ALL_COWS = 1;
+        final int FIND_COW_BY_TAG_ID = 2;
+        final int ADD_COW = 3;
+        final int DELETE_COW = 4;
+        final int FIND_COWS_USING_FILTER = 5;
+        final int EXIT = 6;
+        int option = 0;
+        do
+        {
+            System.out.println("\n"+MENU_ITEMS);
+            try
+            {
+                String usersInput = keyboard.nextLine();
+                option = Integer.parseInt(usersInput);
+                switch (option)
+                {
+                    case FIND_ALL_COWS:
+                        List<Cow> cows_ = ICowDao.findAllCows();
+                        if (cows_.isEmpty())
+                        {
+                            System.out.println("There are no cows");
+                        }
+                        else
+                        {
+                            for (Cow cow : cows_)
+                            {
+                                System.out.println("Cow: " + cow.toString());
+                            }
+                        }
+                        break;
+                    case FIND_COW_BY_TAG_ID:
+                        int tag_id;
+                        System.out.println("Enter tag ID: ");
+                        tag_id = keyboard.nextInt();
+                        Cow cow_ = ICowDao.findCowByTagID(tag_id);
+                        if (cow_ != null)
+                        {
+                            System.out.println("Cow found: " + cow_);
+                        }
+                        else
+                        {
+                            System.out.println("Tag ID was not found");
+                        }
+                        break;
+                    case ADD_COW:
+                        System.out.println("Enter tag ID: ");
+                        int tag_id_ = keyboard.nextInt();
+                        System.out.println("enter sex: ");
+                        String sex = keyboard.nextLine();
+                        System.out.println("enter breed: ");
+                        String breed = keyboard.nextLine();
+                        System.out.println("enter year: ");
+                        int year = keyboard.nextInt();
+                        System.out.println("enter month: ");
+                        int month = keyboard.nextInt();
+                        System.out.println("enter day: ");
+                        int day = keyboard.nextInt();
+                        System.out.println("enter milk yield: ");
+                        int milk_yield = keyboard.nextInt();
+                        Cow cowsAdd = ICowDao.addCow(tag_id_, sex, breed, year, month, day, milk_yield);
+                        if (cowsAdd != null)
+                        {
+                            System.out.println("Cow found: " + cowsAdd);
+                        }
+                        else
+                        {
+                            System.out.println("Tag ID was not found");
+                        }
+                        break;
+                    case DELETE_COW:
+                        System.out.println("Enter tag ID: ");
+                        int tag_id__ = keyboard.nextInt();
+                        List<Cow> cow__ = ICowDao.deleteCow(tag_id__);
+                        if (cow__ != null)
+                        {
+                            System.out.println("Cow found: " + cow__);
+                        }
+                        else
+                        {
+                            System.out.println("Tag ID was not found");
+                        }
+                        break;
+                    case FIND_COWS_USING_FILTER:
+                        int milkYield_;
+                        System.out.println("Enter milk yield: ");
+                        milkYield_ = keyboard.nextInt();
+                        List<Cow> cowsFilter = ICowDao.findCowsUsingFilter();
+                        if (cowsFilter.isEmpty())
+                        {
+                            System.out.println("There are no cows with milk yield greater than " + milkYield_);
+                        }
+                        else
+                        {
+                            for (Cow cow : cowsFilter)
+                            {
+                                if (cow.getMilkYields() == milkYield_)
+                                {
+                                    System.out.println("Cow: " + cow.toString());
+                                }
+                            }
+                        }
+                        break;
+                    case EXIT:
+                        System.out.println("Exit Menu option chosen");
+                        break;
+                    default:
+                        System.out.print("Invalid option - please enter number in range");
+                        break;
+                }
+
+            } catch (InputMismatchException | NumberFormatException | DaoExceptions e)
+            {
+                System.out.print("Invalid option - please enter number in range");
+            }
+        } while (option != EXIT);
+    }
+
+    private void displayHashMapMenu()
+    {
         Cow cow1 = new Cow(224, "female", "angus", 2019, 2, 3, 6);
         Cow cow2 = new Cow(225, "female", "jersey", 2019, 2, 8, 20);
         Cow cow3 = new Cow(226, "female", "jersey", 2019, 2, 11, 20);
@@ -241,7 +378,8 @@ public class App {
 
     }
 
-    private void displayTreeMapMenu() {
+    private void displayTreeMapMenu()
+    {
         Cow cow1 = new Cow(224, "female", "angus", 2019, 2, 3, 6);
         Cow cow2 = new Cow(225, "female", "jersey", 2019, 2, 8, 20);
         Cow cow3 = new Cow(226, "female", "jersey", 2019, 2, 11, 20);
@@ -324,10 +462,10 @@ public class App {
                 System.out.print("Invalid option - please enter number in range");
             }
         } while (option != EXIT);
-
     }
 
-    private void displayPriorityQueueMenu() {
+    private void displayPriorityQueueMenu()
+    {
         Cow cow1 = new Cow(224, "female", "angus", 2019, 2, 3, 6);
         Cow cow2 = new Cow(225, "female", "jersey", 2019, 2, 8, 20);
         Cow cow3 = new Cow(226, "female", "jersey", 2019, 2, 11, 20);
@@ -413,13 +551,12 @@ public class App {
                         System.out.print("Invalid option - please enter number in range");
                         break;
                 }
-
-            } catch (InputMismatchException |NumberFormatException e)
+            }
+            catch (InputMismatchException |NumberFormatException e)
             {
                 System.out.print("Invalid option - please enter number in range");
             }
         } while (option != EXIT);
-
     }
 
     public void displayAllCows (ArrayList < Cow > cows)

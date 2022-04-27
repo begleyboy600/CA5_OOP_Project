@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import org.example.DAOs.CowDaoInterface;
 import org.example.DAOs.MySqlCowDao;
 import org.example.DTOs.Cow;
+import org.example.DTOs.Schema;
 import org.example.Exceptions.DaoExceptions;
 
 import java.io.BufferedReader;
@@ -100,33 +101,19 @@ public class Server
                 {
                     System.out.println("Server: (ClientHandler): Read command from client " + clientNumber + ": " + message);
 
-                    if (message.startsWith("Time"))
-                    {
-                        LocalTime time =  LocalTime.now();
-                        socketWriter.println(time);  // sends current time to client
-                    }
-                    else if (message.startsWith("Echo"))
-                    {
-                        message = message.substring(5); // strip off the 'Echo ' part
-                        socketWriter.println(message);  // send message to client
-                    }
-                    else if (message.startsWith("Triple"))
-                    {
-                        String[] tokens = message.split(" ");
-                        int num = Integer.parseInt(tokens[1]);
-                        socketWriter.println(num * 3);
-                    }
-                    else if (message.startsWith("Display all cows"))
+                    if (message.startsWith("DisplayAllCows"))
                     {
                         Gson gsonParser = new Gson();
                         String JsonString = "";
                         List<Cow> cows_ = dao.findAllCows();
-                        if (cows_.isEmpty()) {
-                            System.out.println("There are no cows");
-                        } else {
-                            for (Cow cow : cows_) {
-                                System.out.println("Cow: " + cow.toString());
-                            }
+                        if (cows_.isEmpty())
+                        {
+                            socketWriter.println("There are no cows in the database.");
+                        }
+                        else
+                        {
+                            JsonString = gsonParser.toJson(cows_);
+                            socketWriter.println("Cows found: " + JsonString);
                         }
                     }
                     else if (message.startsWith("getOneCow"))
@@ -136,11 +123,14 @@ public class Server
                         String[] tokens = message.split(" ");
                         int id = Integer.parseInt(tokens[1]);
                         Cow cow_ = dao.findCowByTagID(id);
-                        if (cow_ != null) {
+                        if (cow_ != null)
+                        {
                             JsonString = gsonParser.toJson(cow_);
-                            socketWriter.println(JsonString);
-                        } else {
-                            socketWriter.println("Tag ID was not found");
+                            socketWriter.println("Cow found: " + JsonString);
+                        }
+                        else
+                        {
+                            socketWriter.println("Cow could not be found.");
                         }
                     }
                     else if(message.startsWith("addCow"))
@@ -156,11 +146,15 @@ public class Server
                         int day = Integer.parseInt(tokens[6]);
                         int milkYield = Integer.parseInt(tokens[7]);
                         Cow cows_ = dao.addCow(id, sex, breed, year, month, day, milkYield);
-                        if (cows_ != null) {
+                        if (cows_ != null)
+                        {
+
                             JsonString = gsonParser.toJson(cows_);
-                            socketWriter.println(JsonString);
-                        } else {
-                            socketWriter.println("Tag ID was not found");
+                            socketWriter.println("Cow added: " + JsonString);
+                        }
+                        else
+                        {
+                            socketWriter.println("Cow could not be added.");
                         }
                     }
                     else if(message.startsWith("deleteCow"))
@@ -169,13 +163,15 @@ public class Server
                         String JsonString = "";
                         String[] tokens = message.split(" ");
                         int id = Integer.parseInt(tokens[1]);
-                        Cow cows_ = dao.deleteCow(id);
-                        if (cows_ != null) {
+                        List<Cow> cows_ = dao.deleteCow(id);
+                        if (cows_ != null)
+                        {
                             JsonString = gsonParser.toJson(cows_);
-                            socketWriter.println(JsonString);;
+                            socketWriter.println("Cow removed from list: " + JsonString);;
                         }
-                        else {
-                            socketWriter.println("Tag ID was not found");
+                        else
+                        {
+                            socketWriter.println("Cow could not be deleted.");
                         }
                     }
                     else if(message.startsWith("filterCow"))
@@ -188,11 +184,15 @@ public class Server
                         ArrayList<Cow> cowsfiltered = new ArrayList<Cow>();
                         Gson gsonParser = new Gson();
                         String JsonString = "";
-                        if (cowsFilter.isEmpty()) {
+                        if (cowsFilter.isEmpty())
+                        {
                             socketWriter.println("There are no cows with milk yield greater than " + milkYield_);
-                        } else {
-                            for (Cow cow : cowsFilter) {
-                                if (cow.getMilkYields() == milkYield_) {
+                        } else
+                        {
+                            for (Cow cow : cowsFilter)
+                            {
+                                if (cow.getMilkYields() == milkYield_)
+                                {
                                     cowsfiltered.add(cow);
                                 }
                             }
@@ -200,12 +200,26 @@ public class Server
                             socketWriter.println(JsonString);
                         }
                     }
+                    else if (message.startsWith("Schema"))
+                    {
+                        Gson gsonParser = new Gson();
+                        String JsonString = "";
+                        List<Schema> schemaList = dao.getInformationSchema();
+                        if (schemaList.isEmpty())
+                        {
+                            System.out.println("There are no schema for this database.");
+                        }
+                        else
+                        {
+                            JsonString = gsonParser.toJson(schemaList);
+                            socketWriter.println("Schema found: " + JsonString);
+                        }
+                    }
                     else
                     {
                         socketWriter.println("I'm sorry I don't understand :(");
                     }
                 }
-
                 socket.close();
 
             } catch (IOException | DaoExceptions ex)
